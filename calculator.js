@@ -38,6 +38,8 @@ function setOperator(op) {
     const display = document.getElementById('display');
     if (op === 'rp2') {
         display.value = Math.pow(parseFloat(display.value), 2);
+    } else if (op === 'sqrt') {
+        display.value = Math.sqrt(parseFloat(display.value));
     } else {
         display.value += op;
     }
