@@ -13,7 +13,7 @@ buttons.forEach(button => {
             clearDisplay();
         } else if (value === '=') {
             calculate();
-        } else if (['+', '-', '*', '/'].includes(value)) {
+        } else if (['+', '-', '*', '/','rp2'].includes(value)) {
             setOperator(value);
         } else {
             appendToDisplay(value);
@@ -22,27 +22,27 @@ buttons.forEach(button => {
 });
 
 function appendToDisplay(value) {
-    currentInput += value;
-    display.innerText = currentInput;
+    document.getElementById('display').value += value;
+}
+
+function calculateResult() {
+    const display = document.getElementById('display');
+    display.value = eval(display.value);
 }
 
 function clearDisplay() {
-    currentInput = '';
-    operator = '';
-    firstOperand = null;
-    display.innerText = '0';
+    document.getElementById('display').value = '';
 }
 
 function setOperator(op) {
-    if (currentInput === '') return;
-    if (firstOperand === null) {
-        firstOperand = parseFloat(currentInput);
+    const display = document.getElementById('display');
+    if (op === 'rp2') {
+        display.value = Math.pow(parseFloat(display.value), 2);
     } else {
-        calculate();
+        display.value += op;
     }
-    operator = op;
-    currentInput = '';
 }
+
 
 function calculate() {
     if (firstOperand === null || currentInput === '') return;
@@ -62,6 +62,9 @@ function calculate() {
         case '/':
             result = firstOperand / secondOperand;
             break;
+            case "rp2":
+                result = firstOperand **2 ;
+                break;
         default:
             return;
     }
